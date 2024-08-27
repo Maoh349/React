@@ -61,3 +61,45 @@ export default Article;
  - ただし状機能方法で1ファイルから複数モジュールをexport可能
  - Reactではエントリポイントでよく使う？
  - エントリポイントでは別名exportも併用する？
+
+# Hooks
+ - クラスコンポーネントでしか使えなかった
+   - コンポーネント内で状態を管理するstate
+   - コンポーネントの時間の流れに基づくライフサイクル
+ - Hooksにより関数コンポーネントでも使えるように
+ - Hooks=クラスコンポーネントの機能に接続する
+
+## useState
+1. useStateによるstateの宣言
+```js
+const [state, setState] = useState(initialState)
+現在の状態　　　　　更新関数　　　　　　　　初期値
+```
+2. stateの更新
+  ```js
+setState(newState)
+更新関数　　新しい値
+```
+4. 具体例
+```js
+const [message, setMessage] = useState('hooks is cool')
+const [likes, setLikes] = useState(0)
+const [isPublished, setIsPublished] = useState(false)
+```
+
+## propsとstateの違い
+ - 両者ともに再描画のきっかけになるが
+   - propsは引数のようにコンポーネントに渡される値
+   - stateはコンポーネントの内部で宣言・制御される値
+  
+## propsへ関数を渡す際の注意点
+### OKな関数の渡し方
+```js
+<PublishButton isPublished={isPublished} onClick={publishArticle} />
+<PublishButton isPublished={isPublished} onClick={() => publishArticle()} />
+```
+
+### NGな関数の渡し方（無限レンダリングが起きる）
+```js
+<PublishButton isPublished={isPublished} onClick={publishArticle()} />
+```
